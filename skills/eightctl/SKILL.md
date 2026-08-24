@@ -1,6 +1,6 @@
 ---
 name: eightctl
-description: Use when controlling Eight Sleep Pods with eightctl, including status, temperature, alarms, Autopilot, base, audio, schedules, or sleep metrics.
+description: Use when inspecting or controlling Eight Sleep Pods with eightctl, including status, temperature, alarms, Autopilot, base, audio, schedules, sleep metrics, or read-only recovery screening.
 ---
 
 # Eight Sleep via eightctl
@@ -17,6 +17,7 @@ system keyring.
 - Do not assume a write applies to one side. Use `--side left|right|solo` or `--target-user-id` when the target is known.
 - After a mutation, run a read-only command and verify the result.
 - Do not repeatedly retry authentication. Eight Sleep uses undocumented cloud endpoints and may rate-limit or change them.
+- Treat health-watch output as a screening signal, never as a diagnosis or emergency assessment.
 
 ## Mandatory Smart Alarm Rule
 
@@ -36,6 +37,7 @@ eightctl --quiet --output json status
 eightctl --quiet --output json presence
 eightctl --quiet --output json schedule list
 eightctl --quiet --output json metrics
+python3 <skill-directory>/scripts/health_watch.py --format json
 ```
 
 The native alarm read route may target a retired endpoint. Use the bundled
@@ -74,6 +76,35 @@ The helper forces Smart Alarm light-sleep settings on updates, reads the alarm
 back through the current list endpoint, and fails if persisted data does not
 confirm them.
 
+## Recovery Screening
+
+Use the read-only health watcher when the user asks whether recent sleep data
+looks unusual:
+
+```sh
+python3 <skill-directory>/scripts/health_watch.py --format json
+```
+
+It fetches `metrics trends`, normalizes dated nights, treats zero physiological
+values as missing, and compares recent nights with a personal baseline. The
+default window is 42 days with 28 baseline nights, at least 7 valid baseline
+nights, and 2 recent nights. It considers heart rate, HRV, respiratory rate,
+sleep duration, time in bed, sleep score, and toss-and-turn count when those
+fields are available.
+
+The statuses mean:
+
+- `insufficient_data`: not enough valid personal history.
+- `normal_variation`: no configured deviation pattern.
+- `physiological_deviation`: one or more unusual signals need context.
+- `possible_illness_or_recovery_stress`: multiple signals repeated across recent nights.
+
+Ask about confounders such as alcohol, hard exercise, stress, poor sleep,
+medication, travel, and menstrual-cycle changes. These can mimic illness. Add
+known context to a single report with repeated `--confounder` flags; nothing is
+persisted. Recommend symptoms, a thermometer or appropriate test, and medical
+care when warranted. Never label the user as sick from Pod data alone.
+
 ## Setup
 
 Install `eightctl` separately and keep its config private with mode `600`:
@@ -93,4 +124,7 @@ secrets.
 
 Eight Sleep control is cloud-only and based on undocumented provider APIs. The
 provider can change endpoints or payloads without notice. Report failures
-clearly instead of guessing credentials or changing unrelated settings.
+clearly instead of guessing credentials or changing unrelated settings. Native
+`eightctl` builds should use a trusted macOS Keychain application access list;
+older builds may prompt repeatedly while reading the token cache. Never read
+or print the token to troubleshoot that behavior.

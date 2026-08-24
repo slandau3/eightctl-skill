@@ -1,0 +1,29 @@
+# eightctl
+
+> Agent skill for careful Eight Sleep Pod control through eightctl.
+
+## Use When
+
+- The user asks to inspect or control an Eight Sleep Pod.
+- The user asks for a Smart Alarm, alarm conversion, or alarm verification.
+- The user asks whether recent sleep data shows an unusual recovery pattern.
+
+## Commands
+
+- `eightctl --quiet --output json status` for read-only Pod status.
+- `python3 skills/eightctl/scripts/alarm.py list` for current alarms.
+- `python3 skills/eightctl/scripts/alarm.py create-one-off ...` for verified Smart Alarms.
+- `python3 skills/eightctl/scripts/health_watch.py --format json` for read-only screening.
+
+## Safety
+
+- Never expose config files, passwords, tokens, or raw authenticated responses.
+- Confirm the exact target and values immediately before any mutation.
+- Every alarm mutation must set and read back `smart.lightSleepEnabled: true`.
+- Never replace Smart Alarm with a fixed-time fallback.
+- Health-watch output is a personalized screening signal, not a diagnosis.
+
+## Configuration
+
+Keep `~/.config/eightctl/config.yaml` mode `600`. The public repository contains
+no credentials or OAuth client secrets.

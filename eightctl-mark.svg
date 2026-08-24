@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">eightctl mark</title>
+  <desc id="desc">A midnight-blue square with a moon and a clean sleep signal.</desc>
+  <rect width="512" height="512" rx="112" fill="#0d1b2a"/>
+  <circle cx="328" cy="158" r="74" fill="#f4d58d"/>
+  <circle cx="359" cy="136" r="74" fill="#0d1b2a"/>
+  <path d="M72 310h78l28-53 45 112 42-86 32 52h143" fill="none" stroke="#8de0c1" stroke-linecap="round" stroke-linejoin="round" stroke-width="22"/>
+  <circle cx="72" cy="310" r="11" fill="#8de0c1"/>
+  <circle cx="440" cy="335" r="11" fill="#8de0c1"/>
+</svg>
