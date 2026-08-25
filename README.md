@@ -1,15 +1,18 @@
+<img src="eightctl-mark.svg" alt="eightctl mark" width="96" height="96" align="right">
+
 # eightctl
 
-![eightctl mark](eightctl-mark.svg)
+[![Tests](https://github.com/slandau3/eightctl-skill/actions/workflows/test.yml/badge.svg)](https://github.com/slandau3/eightctl-skill/actions/workflows/test.yml)
+[![License](https://img.shields.io/github/license/slandau3/eightctl-skill)](LICENSE)
 
-An agent skill for operating Eight Sleep Pods through
-[`eightctl`](https://github.com/steipete/eightctl). It gives OpenCode, Claude,
-Codex, and other skill-compatible runtimes one careful interface for Pod
-inspection, verified Smart Alarms, and personalized sleep-recovery screening.
+**Agent-native control for Eight Sleep Pods.**
 
-The goal is not to pretend an agent is a medical device. The goal is to make
-ordinary Pod operations explicit, inspectable, and difficult to get subtly
-wrong.
+This skill gives OpenCode, Claude, Codex, and other compatible runtimes one
+careful interface for Pod inspection, verified Smart Alarms, and personalized
+sleep-recovery screening.
+
+Human overview: this README. Machine summary: [`llms.txt`](llms.txt). Runtime
+rules: [`skills/eightctl/SKILL.md`](skills/eightctl/SKILL.md).
 
 ## Capabilities
 
@@ -20,6 +23,13 @@ wrong.
   against a personal baseline.
 - Produce machine-readable JSON or concise human-readable reports without
   writing account data.
+
+## For Agents
+
+- Use `SKILL.md` as the source of truth for triggers, safety, and operating rules.
+- Use `scripts/alarm.py` for Smart Alarm writes and persisted read-back.
+- Use `scripts/health_watch.py` for read-only recovery screening.
+- Never expose config files, passwords, tokens, or raw authenticated responses.
 
 ## Install
 

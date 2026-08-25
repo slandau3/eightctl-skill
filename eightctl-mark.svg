@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
   <title id="title">eightctl mark</title>
   <desc id="desc">A midnight-blue square with a moon and a clean sleep signal.</desc>
   <rect width="512" height="512" rx="112" fill="#0d1b2a"/>
