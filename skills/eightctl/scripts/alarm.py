@@ -193,7 +193,8 @@ def read_back_alarm(token, user_id, alarm_id):
 
 def create_one_off(args, token, user_id):
     pattern = args.pattern.upper()
-    validate_settings(args.vibration_level, pattern, args.thermal_level)
+    thermal_level = None if args.thermal_off else args.thermal_level
+    validate_settings(args.vibration_level, pattern, thermal_level)
     payload = {
         "time": normalize_time(args.time),
         "enabled": True,
@@ -203,8 +204,8 @@ def create_one_off(args, token, user_id):
             "pattern": pattern,
         },
         "thermal": {
-            "enabled": args.thermal_level is not None,
-            "level": args.thermal_level if args.thermal_level is not None else 0,
+            "enabled": thermal_level is not None,
+            "level": thermal_level if thermal_level is not None else 0,
         },
         "smart": dict(SMART_ALARM),
     }
@@ -233,8 +234,8 @@ def update_alarm(args, token, user_id):
     if args.time:
         payload["time"] = normalize_time(args.time)
     vibration = dict(payload.get("vibration") or {})
-    pattern = args.pattern.upper() if args.pattern else vibration.get("pattern", "RISE")
-    vibration_level = args.vibration_level or vibration.get("powerLevel", 50)
+    pattern = args.pattern.upper() if args.pattern else vibration.get("pattern", "INTENSE")
+    vibration_level = args.vibration_level or vibration.get("powerLevel", 100)
     validate_settings(vibration_level, pattern, args.thermal_level)
     vibration["powerLevel"] = vibration_level
     vibration["pattern"] = pattern
@@ -273,9 +274,10 @@ def main():
     create_parser = subparsers.add_parser("create-one-off")
     add_target_user_id(create_parser)
     create_parser.add_argument("--time", required=True)
-    create_parser.add_argument("--thermal-level", type=int)
-    create_parser.add_argument("--vibration-level", type=int, default=50)
-    create_parser.add_argument("--pattern", default="RISE")
+    create_parser.add_argument("--thermal-level", type=int, default=100)
+    create_parser.add_argument("--thermal-off", action="store_true")
+    create_parser.add_argument("--vibration-level", type=int, default=100)
+    create_parser.add_argument("--pattern", default="INTENSE")
     create_parser.add_argument("--sound")
     create_parser.add_argument("--no-vibration", action="store_true")
 

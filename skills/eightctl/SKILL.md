@@ -57,20 +57,18 @@ to report success unless the API confirms light-sleep mode:
 
 ```sh
 python3 <skill-directory>/scripts/alarm.py create-one-off \
-  --target-user-id USER_ID --time HH:MM:SS --thermal-level -10
+  --target-user-id USER_ID --time HH:MM:SS
 ```
+
+Defaults are `100 INTENSE` vibration and `100` thermal (hot) — the safe, loud wake-up. Override only when the user explicitly asks for a gentler setting. To disable thermal for a specific alarm, pass `--thermal-off`. A negative thermal level means colder; do not silently convert the user's requested level.
 
 To convert or change an existing alarm while preserving unspecified settings:
 
 ```sh
 python3 <skill-directory>/scripts/alarm.py update \
-  --target-user-id USER_ID --alarm-id ID --thermal-level -10 \
-  --vibration-level 50 --pattern RISE
+  --target-user-id USER_ID --alarm-id ID --thermal-level 100 \
+  --vibration-level 100 --pattern INTENSE
 ```
-
-The helper defaults to vibration level `50` and pattern `RISE`. Use `INTENSE`
-and level `100` only when requested or already configured. A negative thermal
-level means colder; do not silently convert the user's requested level.
 
 The helper forces Smart Alarm light-sleep settings on updates, reads the alarm
 back through the current list endpoint, and fails if persisted data does not

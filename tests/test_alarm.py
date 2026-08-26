@@ -37,6 +37,7 @@ class AlarmTests(unittest.TestCase):
             vibration_level=100,
             pattern="INTENSE",
             thermal_level=100,
+            thermal_off=False,
             sound=None,
         )
         calls = []
