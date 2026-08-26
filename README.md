@@ -80,7 +80,7 @@ python3 skills/eightctl/scripts/alarm.py create-one-off \
 python3 skills/eightctl/scripts/alarm.py list
 ```
 
-Scale: vibration `20` low / `50` mid / `100` max (plus off), thermal `-100` cold → `+100` hot (plus off). Defaults are `100 INTENSE` / `100`.
+Scale: vibration `20` low / `50` mid / `100` max (plus off), thermal `-100` cold → `+100` hot (plus off). Defaults are `100 INTENSE` / `-100` (cold).
 
 Every write sends and then **verifies**:
 

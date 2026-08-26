@@ -274,7 +274,7 @@ def main():
     create_parser = subparsers.add_parser("create-one-off")
     add_target_user_id(create_parser)
     create_parser.add_argument("--time", required=True)
-    create_parser.add_argument("--thermal-level", type=int, default=100)
+    create_parser.add_argument("--thermal-level", type=int, default=-100)
     create_parser.add_argument("--thermal-off", action="store_true")
     create_parser.add_argument("--vibration-level", type=int, default=100)
     create_parser.add_argument("--pattern", default="INTENSE")

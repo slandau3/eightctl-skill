@@ -60,7 +60,7 @@ python3 <skill-directory>/scripts/alarm.py create-one-off \
   --target-user-id USER_ID --time HH:MM:SS
 ```
 
-Defaults are `100 INTENSE` vibration and `100` thermal (hot) — the safe, loud wake-up. Override only when the user explicitly asks for a gentler setting. Scale: vibration `20` low / `50` mid / `100` max (plus off via `--no-vibration`); thermal `-100` cold → `+100` hot (plus off via `--thermal-off`). A negative thermal level means colder; do not silently convert the user's requested level.
+Defaults are `100 INTENSE` vibration and `-100` thermal (cold) — the sharp, reliable wake-up (studies suggest cold beats heat for alertness). Override only when the user explicitly asks for a gentler or hotter setting. Scale: vibration `20` low / `50` mid / `100` max (plus off via `--no-vibration`); thermal `-100` cold → `+100` hot (plus off via `--thermal-off`). A negative thermal level means colder; do not silently convert the user's requested level.
 
 To convert or change an existing alarm while preserving unspecified settings:
 
